@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Quennect Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+:root{
+    --dark-blue:#003367;
+    --blue:#cc3333;
+    --teal:#4D8E79;
+    --green:#003367;
+    --white:#f5f5f5;
+}
+
+body{
+    background:#dcdcdc;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    width:260px;
+    position:fixed;
+    top:0;
+    left:0;
+    bottom:0;
+
+    background:linear-gradient(
+        180deg,
+        var(--dark-blue),
+        var(--blue)
+    );
+
+    color:white;
+    padding:30px 20px;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:700;
+    margin-bottom:40px;
+}
+
+.status{
+    padding:8px 14px;
+    border-radius:30px;
+    color:white;
+    font-size:13px;
+    font-weight:600;
+}
+
+.waiting{
+    background:orange;
+}
+
+.processing{
+    background:#264A96;
+}
+
+.served{
+    background:#59B438;
+}
+
+.menu{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.menu-item{
+    padding:15px;
+    border-radius:15px;
+    background:rgba(255,255,255,.08);
+    cursor:pointer;
+    transition:.3s;
+}
+
+.menu-item:hover{
+    background:rgba(255,255,255,.18);
+}
+
+.logout{
+    background:linear-gradient(
+        135deg,
+        #ff4d4d,
+        #ff7b7b
+    );
+}
+
+/* MAIN */
+
+.main{
+    margin-left:260px;
+    padding:40px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.topbar h1{
+    font-size:38px;
+}
+
+.user-box{
+    background:white;
+    padding:15px 20px;
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+/* CARDS */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+    margin-bottom:30px;
+}
+
+.card{
+    background:white;
+    border-radius:25px;
+    padding:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.card h3{
+    color:#777;
+    margin-bottom:10px;
+}
+
+.card p{
+    font-size:42px;
+    font-weight:700;
+}
+
+.blue{color:var(--blue);}
+.green{color:var(--green);}
+.teal{color:var(--teal);}
+.dark{color:var(--dark-blue);}
+
+/* SECTION */
+
+.section{
+    display:none;
+}
+
+.section.active{
+    display:block;
+}
+
+/* CONTENT BOX */
+
+.content-box{
+    background:white;
+    border-radius:25px;
+    padding:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    margin-bottom:30px;
+}
+
+.content-box h2{
+    margin-bottom:20px;
+}
+
+/* TABLE */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+thead{
+    background:linear-gradient(
+        135deg,
+        var(--dark-blue),
+        var(--blue)
+    );
+    color:white;
+}
+
+th{
+    padding:18px;
+    text-align:left;
+}
+
+td{
+    padding:18px;
+    border-bottom:1px solid #eee;
+}
+
+/* ANALYTICS */
+
+.chart{
+    display:flex;
+    align-items:flex-end;
+    gap:30px;
+    height:250px;
+}
+
+.bar-group{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+}
+
+.bar{
+    width:60px;
+    border-radius:15px 15px 0 0;
+
+    background:linear-gradient(
+        180deg,
+        var(--green),
+        var(--blue)
+    );
+}
+
+@media(max-width:900px){
+
+    .sidebar{
+        width:100%;
+        position:relative;
+    }
+
+    .main{
+        margin-left:0;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <div class="logo">
+        Quennect
+    </div>
+
+    <div class="menu">
+
+        <div class="menu-item"
+        onclick="showSection('dashboardSection')">
+            Dashboard
+        </div>
+
+        <div class="menu-item"
+        onclick="showSection('queueSection')">
+            Queueing
+            
+        </div>
+    
+        <div class="menu-item"
+        onclick="showSection('analysisSection')">
+            Analysis
+        </div>
+
+        <div class="menu-item"
+        onclick="showSection('aboutSection')">
+            About Us
+        </div>
+
+        <div class="menu-item logout"
+        onclick="window.location.href='/'">
+            Logout
+        </div>
+
+    </div>
+
+</div>
+
+<div class="main">
+
+    <div class="topbar">
+
+        <h1>Quennect Dashboard</h1>
+
+        <div class="user-box">
+            Janseth Vega
+        </div>
+
+    </div>
+
+    <!-- DASHBOARD -->
+
+    <div id="dashboardSection" class="section active">
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>Now Serving</h3>
+                <p class="blue">A-002</p>
+            </div>
+
+            <div class="card">
+                <h3>Calling</h3>
+                <p class="teal">A-005</p>
+            </div>
+
+            <div class="card">
+                <h3>Waiting</h3>
+                <p class="green">4</p>
+            </div>
+
+            <div class="card">
+                <h3>Completed</h3>
+                <p class="dark">2</p>
+            </div>
+
+        </div>
+
+        <div class="content-box">
+
+            <h2>Live Queue Summary</h2>
+
+            <p>
+                No active queues.<br>
+                Waiting for staff panel input.
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- QUEUEING -->
+
+    <div id="queueSection" class="section">
+
+    <div class="content-box">
+
+        <h2>Queue Monitoring</h2>
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>ID</th>
+                    <th>Queue Number</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody id="queueTableBody">
+
+</tbody>
+
+        </table>
+
+    </div>
+
+
+</div>
+    <!-- ANALYSIS -->
+
+    <div id="analysisSection" class="section">
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>Peak Day</h3>
+                <p class="blue" id="peakDay">Friday</p>
+            </div>
+
+            <div class="card">
+                <h3>Total Queues</h3>
+                <p class="green" id="totalQueues">8</p>
+            </div>
+
+            <div class="card">
+                <h3>Average Wait</h3>
+                <p class="teal">13m</p>
+            </div>
+
+        </div>
+
+        <div class="content-box">
+
+            <h2>Peak Hours Analytics</h2>
+
+            <div class="chart">
+
+                <div class="bar-group">
+                    <div class="bar" style="height:10px"></div>
+                    <div>Mon</div>
+                    <div>0 People</div>
+                </div>
+
+                <div class="bar-group">
+                    <div class="bar" style="height:140px"></div>
+                    <div>Tue</div>
+                <div>2 People</div>
+                </div>
+
+                <div class="bar-group">
+                    <div class="bar" style="height:10px"></div>
+                    <div>Wed</div>
+                    <div>0 Person</div>
+                </div>
+
+                <div class="bar-group">
+                    <div id="thuBar" class="bar" style="height:10px"></div>
+                    <div>Thu</div>
+                    <div id="thuLabel">0 People</div>
+                </div>
+
+                <div class="bar-group">
+                    <div id="friBar" class="bar" style="height:220px"></div>
+                    <div>Fri</div>
+                    <div id="friLabel">3 People</div>
+                </div>
+
+                <div class="bar-group">
+                    <div id="satBar" class="bar" style="height:220px"></div>
+                    <div>Sat</div>
+                    <div id="satLabel">3 People</div>
+                </div>
+
+                <div class="bar-group">
+                    <div id="sunBar" class="bar" style="height:10px"></div>
+                    <div>Sun</div>
+                    <div id="sunLabel">0 People</div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ABOUT -->
+
+    <div id="aboutSection" class="section">
+
+        <div class="content-box">
+
+            <h2>About Smart Queueing System</h2>
+
+            <p>
+                Smart Queueing System is designed to reduce
+                waiting time and improve customer experience
+                through real-time queue monitoring,
+                appointment scheduling, and analytics.
+            </p>
+
+            <br>
+
+            <h3>Researchers</h3>
+
+            <br>
+
+            <p>
+                Janseth Vega<br>
+                Amatullah Alojado<br>
+                Julian Matthew Legazpi<br>
+                Nianha Donn Tresballes
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function showSection(sectionId){
+
+    document.querySelectorAll('.section')
+    .forEach(section=>{
+        section.classList.remove('active');
+    });
+
+    document.getElementById(sectionId)
+    .classList.add('active');
+}
+
+</script>
+
+    <script>
+
+async function loadQueues(){
+
+    const response =
+        await fetch('/get_queue');
+
+    const queues =
+        await response.json();
+
+    const tableBody =
+        document.getElementById("queueTableBody");
+
+    tableBody.innerHTML = "";
+
+    queues.forEach((queue,index)=>{
+
+        let cssClass = "waiting";
+
+        if(queue.status === "Calling"){
+            cssClass = "processing";
+        }
+
+        if(queue.status === "Done"){
+            cssClass = "served";
+        }
+
+        tableBody.innerHTML += `
+        <tr>
+            <td>${index + 1}</td>
+            <td>${queue.number}</td>
+            <td>
+                <span class="status ${cssClass}">
+                    ${queue.status}
+                </span>
+            </td>
+        </tr>
+        `;
+    });
+
+    updateAnalysis(queues);
+}
+
+function updateAnalysis(queues) {
+    const baseTotal = 8;
+    const addedCount = queues.length;
+    const totalQueues = baseTotal + addedCount;
+    document.getElementById('totalQueues').innerText = totalQueues;
+
+    const thursdayCount = addedCount;
+    const fridayCount = 3;
+    const saturdayCount = 3;
+
+    const thuBar = document.getElementById('thuBar');
+    const friBar = document.getElementById('friBar');
+    const satBar = document.getElementById('satBar');
+    const thuLabel = document.getElementById('thuLabel');
+    const friLabel = document.getElementById('friLabel');
+    const satLabel = document.getElementById('satLabel');
+
+    const maxBarHeight = 220;
+    const maxCount = Math.max(thursdayCount, fridayCount, saturdayCount, 3);
+    const heightFromCount = count => Math.max(10, Math.round((count / maxCount) * maxBarHeight));
+
+    if (thuBar) thuBar.style.height = `${heightFromCount(thursdayCount)}px`;
+    if (friBar) friBar.style.height = `${heightFromCount(fridayCount)}px`;
+    if (satBar) satBar.style.height = `${heightFromCount(saturdayCount)}px`;
+
+    if (thuLabel) thuLabel.innerText = `${thursdayCount} People`;
+    if (friLabel) friLabel.innerText = `${fridayCount} People`;
+    if (satLabel) satLabel.innerText = `${saturdayCount} People`;
+
+    let peakDay = 'Friday';
+    let peakCount = fridayCount;
+
+    if (thursdayCount > peakCount) {
+        peakDay = 'Thursday';
+        peakCount = thursdayCount;
+    }
+    if (saturdayCount > peakCount) {
+        peakDay = 'Saturday';
+        peakCount = saturdayCount;
+    }
+
+    const peakDayElement = document.getElementById('peakDay');
+    if (peakDayElement) peakDayElement.innerText = peakDay;
+}
+
+loadQueues();
+setInterval(loadQueues,100);
+</script>
+</body>
+</html>

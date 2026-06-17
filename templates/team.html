@@ -1,0 +1,375 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Team - Pasta Express</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter, Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#003367 0%,#a7b8cf 100%);
+    min-height:100vh;
+}
+
+/* NAVBAR */
+nav{
+    display:flex;
+    align-items:center;
+    gap:24px;
+    padding:18px 40px;
+    background:#fff;
+    box-shadow:0 2px 12px rgba(0,0,0,.08);
+}
+
+.nav-logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:#003367;
+    font-size:1.2rem;
+    font-weight:700;
+    padding:8px 12px;
+    border-radius:10px;
+    transition:.3s;
+}
+
+.nav-logo.active{
+    background:#003367;
+    color:white;
+    box-shadow:0 4px 12px rgba(204,51,51,0.3);
+}
+
+.nav-logo.active img{
+    border:3px solid white;
+    box-shadow:inset 0 0 0 2px #003367;
+}
+
+.nav-links{
+    display:flex;
+    gap:18px;
+    list-style:none;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#1f2937;
+    font-weight:600;
+}
+
+.nav-links a:hover{
+    color:#cc3333;
+}
+
+/* PAGE */
+.team-section{
+    padding:50px 40px 50px;
+    text-align:center;
+}
+
+.team-title{
+    color:white;
+    font-size:2.5rem;
+    font-weight:600;
+    margin-bottom:10px;
+}
+
+.team-banner{
+    max-width:900px;
+    margin:0 auto 20px;
+}
+
+.team-banner img{
+    width:100%;
+    border-radius:10px;
+    box-shadow:0 12px 30px rgba(0,0,0,.25);
+}
+
+.team-credit{
+    color:white;
+    font-size:1.5rem;
+    font-weight:700;
+    margin-bottom:40px;
+}
+
+.team-description{
+    max-width:900px;
+    margin:0 auto 60px;
+    color:white;
+    font-size:1.25rem;
+    line-height:1.8;
+}
+
+.team-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:30px;
+    max-width:1200px;
+    margin:auto;
+}
+
+.team-card{
+    color:white;
+}
+
+.team-card img{
+    width:100%;
+    height:260px;
+    object-fit:cover;
+    border-radius:10px;
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
+}
+
+.team-card h3{
+    margin-top:15px;
+    font-size:1.5rem;
+}
+
+.role{
+    margin-top:8px;
+    font-size:1.1rem;
+    line-height:1.5;
+}
+
+.toggle-btn{
+    background:none;
+    border:none;
+    color:white;
+    font-size:2rem;
+    cursor:pointer;
+    margin-top:10px;
+    transition:.3s;
+}
+
+.toggle-btn.active{
+    transform:rotate(180deg);
+}
+
+.team-info{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .4s ease;
+}
+
+.team-info p{
+    margin-top:15px;
+    line-height:1.7;
+    font-size:1rem;
+}
+
+/* LOADING */
+.loading-overlay{
+    position:fixed;
+    inset:0;
+    z-index:999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(255,255,255,.95);
+    transition:.3s;
+}
+
+.loading-overlay.hidden{
+    opacity:0;
+    visibility:hidden;
+}
+
+.loading-spinner{
+    width:60px;
+    height:60px;
+    border:8px solid rgba(0,0,0,.12);
+    border-top-color:#cc3333;
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+    from{transform:rotate(0deg);}
+    to{transform:rotate(360deg);}
+}
+
+@media(max-width:768px){
+
+    .team-title{
+        font-size:2.5rem;
+    }
+
+    .team-description{
+        font-size:1rem;
+    }
+
+    nav{
+        flex-wrap:wrap;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+</div>
+
+<nav>
+    <div class="nav-logo">
+        <img src="{{ url_for('static', filename='logo.png') }}"
+             alt="Logo"
+             style="width:40px;height:40px;object-fit:contain;border-radius:12px;">
+        Quennect
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="{{ url_for('team') }}">The Team</a></li>
+    </ul>
+</nav>
+
+<section class="team-section">
+
+
+    <div class="team-banner">
+        <img src="{{ url_for('static', filename='team-logo.png') }}">
+    </div>
+
+    <div class="team-credit">
+        Created by XPRESS
+    </div>
+
+    <div class="team-description">
+        Meet the developers, designers, and managers behind
+        Quennect. Our team worked together to create
+        a queue management system that improves customer
+        experience and streamlines restaurant operations.
+    </div>
+
+    <div class="team-grid">
+
+        <div class="team-card">
+            <img src="{{ url_for('static', filename='janseth.png') }}">
+            <h3>Janseth Joseph R. Vega</h3>
+            <p class="role">
+                Lead Developer<br>
+                Backend
+            </p>
+
+            <button class="toggle-btn">▼</button>
+
+            <div class="team-info">
+                <p>
+                    Developed the backend architecture,
+                    APIs, database communication,
+                    and overall system integration.
+                </p>
+            </div>
+        </div>
+
+        <div class="team-card">
+            <img src="{{ url_for('static', filename='nianha.png') }}">
+            <h3>Nianha Donn D. Tresballes</h3>
+            <p class="role">
+                Project Manager<br>
+                Error Tracking & Logs
+            </p>
+
+            <button class="toggle-btn">▼</button>
+
+            <div class="team-info">
+                <p>
+                    Managed project planning,
+                    team coordination,
+                    documentation, and issue tracking.
+                </p>
+            </div>
+        </div>
+
+        <div class="team-card">
+            <img src="{{ url_for('static', filename='amatullah.png') }}">
+            <h3>Amatullah R. Alojado</h3>
+            <p class="role">
+                UI / UX<br>
+                Frontend
+            </p>
+
+            <button class="toggle-btn">▼</button>
+
+            <div class="team-info">
+                <p>
+                    Designed interfaces and user
+                    experiences while implementing
+                    frontend features.
+                </p>
+            </div>
+        </div>
+
+        <div class="team-card">
+            <img src="{{ url_for('static', filename='julian.png') }}">
+            <h3>Julian Matthew V. Legaspi</h3>
+            <p class="role">
+                Database & Storage<br>
+                Backend
+            </p>
+
+            <button class="toggle-btn">▼</button>
+
+            <div class="team-info">
+                <p>
+                    Handled database structures,
+                    storage systems,
+                    and data management.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<script>
+
+window.addEventListener('DOMContentLoaded', () => {
+
+    const overlay = document.getElementById('loadingOverlay');
+
+    if(overlay){
+        overlay.classList.add('hidden');
+        setTimeout(() => overlay.remove(), 400);
+    }
+
+});
+
+document.querySelectorAll('.toggle-btn').forEach(button => {
+
+    button.addEventListener('click', () => {
+
+        const info = button.nextElementSibling;
+
+        if(info.style.maxHeight){
+
+            info.style.maxHeight = null;
+            button.classList.remove('active');
+
+        }else{
+
+            info.style.maxHeight = info.scrollHeight + "px";
+            button.classList.add('active');
+
+        }
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>
+```

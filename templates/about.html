@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About - Quennect</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter, Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#cc3333 0%,#f8dede 100%);
+    min-height:100vh;
+}
+
+/* NAVBAR */
+nav{
+    display:flex;
+    align-items:center;
+    gap:30px;
+    padding:18px 40px;
+    background:white;
+    box-shadow:0 2px 12px rgba(0,0,0,0.08);
+}
+
+.nav-logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:#cc3333;
+    font-size:1.2rem;
+    font-weight:700;
+    padding:8px 12px;
+    border-radius:10px;
+    transition:.3s;
+}
+
+
+.nav-logo.active img{
+    border:3px solid white;
+
+}
+
+.nav-links{
+    display:flex;
+    gap:20px;
+    list-style:none;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#1f2937;
+    font-weight:600;
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:#cc3333;
+}
+
+/* ABOUT SECTION */
+.about-container{
+    padding:50px 80px 100px;
+}
+
+.about-title{
+    text-align:center;
+    font-size:4rem;
+    font-weight:800;
+    color:white;
+    margin-bottom:60px;
+}
+
+.about-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:60px;
+    margin-bottom:100px;
+}
+
+.about-row.reverse{
+    flex-direction:row-reverse;
+}
+
+.about-text{
+    flex:1;
+}
+
+.about-text p{
+    color:rgb(255, 255, 255);
+    font-size:1.5rem;
+    line-height:1.7;
+}
+
+.about-image{
+    flex:1;
+}
+
+.about-image img{
+    width:100%;
+    border-radius:15px;
+    object-fit:cover;
+
+}
+
+.about-center-image{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+.about-center-image img{
+    width:70%;
+    border-radius:15px;
+ 
+}
+
+.about-bottom{
+    text-align:center;
+    max-width:900px;
+    margin:auto;
+}
+
+.about-bottom p{
+    color:rgb(255, 255, 255);
+    font-size:1.5rem;
+    line-height:1.8;
+}
+
+/* LOADING SCREEN */
+.loading-overlay{
+    position:fixed;
+    inset:0;
+    z-index:999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(255,255,255,0.95);
+    transition:opacity .3s ease, visibility .3s ease;
+}
+
+.loading-overlay.hidden{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+}
+
+.loading-spinner{
+    width:60px;
+    height:60px;
+    border:8px solid rgba(0,0,0,0.12);
+    border-top-color:#cc3333;
+    border-radius:50%;
+    animation:spin 3s linear infinite;
+}
+
+@keyframes spin{
+    from{transform:rotate(0deg);}
+    to{transform:rotate(360deg);}
+}
+
+/* MOBILE */
+@media(max-width:900px){
+
+    .about-container{
+        padding:40px 25px 80px;
+    }
+
+    .about-title{
+        font-size:2.8rem;
+    }
+
+    .about-row,
+    .about-row.reverse{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .about-text p{
+        font-size:1.2rem;
+    }
+
+    .about-center-image img{
+        width:100%;
+    }
+
+    .about-bottom p{
+        font-size:1.3rem;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Loading Screen -->
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+</div>
+
+<!-- Navbar -->
+<nav>
+    <div class="nav-logo">
+        <img src="{{ url_for('static', filename='logo.png') }}"
+             alt="Logo"
+             style="width:40px;height:40px;object-fit:contain;border-radius:12px;">
+        Quennect
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="{{ url_for('team') }}">The Team</a></li>
+    </ul>
+</nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const navLogo = document.querySelector('.nav-logo');
+        if (navLogo) {
+            navLogo.classList.add('active');
+        }
+    });
+</script>
+
+<!-- About Content -->
+<section class="about-container">
+
+    <h1 class="about-title">ABOUT US</h1>
+
+    <!-- First Row -->
+    <div class="about-row">
+        <div class="about-text">
+            <p>
+                Quennect makes queue management simpler and more
+                convenient for restaurants and customers through
+                real-time queue tracking, customer notifications,
+                and an easy-to-use platform.
+            </p>
+        </div>
+
+        <div class="about-image">
+            <img src="{{ url_for('static', filename='about1.png') }}"
+                 alt="About Quennect">
+        </div>
+    </div>
+
+    <!-- Second Row -->
+    <div class="about-row reverse">
+        <div class="about-text">
+            <p>
+                Quennect provides a way to manage customer flow
+                while improving overall dining experience.
+                By reducing uncertainty and waiting time,
+                customers can spend less time standing in line
+                and more time enjoying their meals.
+            </p>
+        </div>
+
+        <div class="about-image">
+            <img src="{{ url_for('static', filename='about2.png') }}"
+                 alt="Queue Management">
+        </div>
+    </div>
+
+    <!-- Third Image -->
+    <div class="about-center-image">
+        <img src="{{ url_for('static', filename='about3.png') }}"
+             alt="Vision">
+    </div>
+
+    <!-- Bottom Text -->
+    <div class="about-bottom">
+        <p>
+            With a focus on accessibility, convenience, and innovation,
+            Quennect aims to help restaurants serve customers
+            better, one queue at a time.
+        </p>
+    </div>
+
+</section>
+
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+    const overlay = document.getElementById('loadingOverlay');
+
+    if(overlay){
+        overlay.classList.add('hidden');
+        setTimeout(() => overlay.remove(), 400);
+    }
+});
+</script>
+
+</body>
+</html>
